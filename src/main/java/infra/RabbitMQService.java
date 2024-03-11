@@ -17,7 +17,6 @@ public class RabbitMQService {
     factory.setUsername("admin");
     factory.setPassword("admin");
     factory.setVirtualHost("/");
-    // Set other connection properties here, such as username and password if necessary
     this.connection = factory.newConnection();
   }
 
@@ -49,7 +48,6 @@ public class RabbitMQService {
     }
   }
 
-  // Ensure resources are released when the object is garbage-collected
   @Override
   protected void finalize() throws Throwable {
     try {
@@ -60,5 +58,4 @@ public class RabbitMQService {
     }
   }
 
-  // The rest of your RabbitMQ logic would go here
 }
