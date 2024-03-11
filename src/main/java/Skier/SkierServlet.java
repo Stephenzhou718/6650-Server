@@ -37,15 +37,12 @@ public class SkierServlet extends HttpServlet {
     }
 
     String[] urlParts = urlPath.split("/");
-    // and now validate url path and return the response status code
-    // (and maybe also some value if input is valid)
 
     if (!isUrlValid(urlParts)) {
       res.setStatus(HttpServletResponse.SC_NOT_FOUND);
     } else {
       res.setStatus(HttpServletResponse.SC_OK);
       // do any sophisticated processing with urlParts which contains all the url params
-      // TODO: process url params in `urlParts`
       res.getWriter().write("It works!");
     }
   }
