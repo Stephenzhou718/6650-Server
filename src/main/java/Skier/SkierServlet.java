@@ -17,7 +17,7 @@ public class SkierServlet extends HttpServlet {
   public void init() throws ServletException {
     super.init();
     try {
-      this.rabbitMQService = new RabbitMQService("34.208.141.48");
+      this.rabbitMQService = new RabbitMQService("34.221.202.164");
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
