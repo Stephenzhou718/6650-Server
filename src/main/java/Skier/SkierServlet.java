@@ -1,7 +1,6 @@
 package Skier;
 
 import com.google.gson.Gson;
-import com.rabbitmq.client.Channel;
 import infra.RabbitMQService;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -28,14 +27,6 @@ public class SkierServlet extends HttpServlet {
       throws ServletException, IOException {
     res.setContentType("text/plain");
     String urlPath = req.getPathInfo();
-
-    // check we have a URL!
-    if (urlPath == null || urlPath.isEmpty()) {
-      res.setStatus(HttpServletResponse.SC_NOT_FOUND);
-      res.getWriter().write("missing paramterers");
-      return;
-    }
-
     String[] urlParts = urlPath.split("/");
 
     if (!isUrlValid(urlParts)) {
@@ -54,14 +45,12 @@ public class SkierServlet extends HttpServlet {
     String urlPath = req.getPathInfo();
 
     // check we have a URL!
-    if (urlPath == null || urlPath.isEmpty()) {
+    String[] urlParts = urlPath.split("/");
+    if (!isUrlValid(urlParts)) {
       res.setStatus(HttpServletResponse.SC_NOT_FOUND);
       res.getWriter().write("missing paramterers");
       return;
     }
-
-    String[] urlParts = urlPath.split("/");
-
     if (urlParts.length != 8) {
       res.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid URL format");
       return;
@@ -102,7 +91,7 @@ public class SkierServlet extends HttpServlet {
       skiersLogResponse.setMessage("You have request the post api of Skiers successfully!");
 
       // send log
-      rabbitMQService.sendMessage("skier-data", gson.toJson(skiersLog));
+      rabbitMQService.sendMessage("skiers-data", gson.toJson(skiersLog));
     } catch (Exception ex) {
       ex.printStackTrace();
       skiersLogResponse.setMessage(ex.getMessage());
@@ -114,8 +103,9 @@ public class SkierServlet extends HttpServlet {
   }
 
   private boolean isUrlValid(String[] urlPath) {
-    // urlPath  = "/1/seasons/2019/day/1/skier/123"
-    // urlParts = [, 1, seasons, 2019, day, 1, skier, 123]
+    if (urlPath == null || urlPath.length == 0) {
+      return false;
+    }
     return true;
   }
 }
