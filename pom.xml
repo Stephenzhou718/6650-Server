@@ -35,6 +35,12 @@
       <artifactId>amqp-client</artifactId>
       <version>5.12.0</version> <!-- Use the latest version applicable -->
     </dependency>
+
+    <dependency>
+      <groupId>org.mongodb</groupId>
+      <artifactId>mongodb-driver-sync</artifactId>
+      <version>5.0.0</version>
+    </dependency>
   </dependencies>
 
 </project>
